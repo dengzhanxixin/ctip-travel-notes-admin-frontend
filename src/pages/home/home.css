@@ -1,0 +1,53 @@
+.homeBodyBox{
+  height: 100vh ;
+  /* height: 100%; */
+  width: 100%;
+}
+
+.homeHeader{
+  background-color: #242f42 !important;
+  position: relative;
+}
+
+.homeImage{
+  width:55px !important;
+  height:55px !important;
+  border-radius:50%;
+  position: absolute;
+  margin-left: -24px;
+  margin-top: -33px;
+}
+
+.homeSpanTitle{
+  color: #fff;
+  display: block;
+  position: absolute;
+  margin-left: 53px;
+  margin-top: -66px;
+}
+
+.homeLogOut{
+  position: absolute !important;
+  right: 31px;
+  top: 14px;
+}
+
+.homeContent {
+    /* min-height: 800px; */
+    padding: 0px;
+    background: #fff;
+  }
+
+  .ant-layout-sider-trigger {
+     height: 87px !important;
+  }
+
+.homeFooter{
+  text-align: center;
+}
+
+
+
+
+
+    
