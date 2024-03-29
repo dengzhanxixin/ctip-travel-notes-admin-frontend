@@ -1,38 +1,38 @@
 import React, { useState } from "react";
 import { Button, Form, Input, message } from "antd";
-import { getHomeMultidata } from "../../service/index";
 import axios from "axios";
 import "./login.css";
-import Cookies from 'js-cookie';
 
 function Login(props) {
   const [isLoginView, setIsLoginView] = useState(true); // 新增状态变量控制视图切换
 
-  
-
   const onSubmit = (values) => {
     if (isLoginView) {
       // 登录逻辑
-      getHomeMultidata(values).then((res) => {
-        console.log("响应对象:", res);
-        if (res.meta.status === 200) {
-          message.info("登录成功");
-          // 登录成功
-          sessionStorage.setItem("isLoggedIn", "true");
-          console.log("登陆成功", res);
-
-          window.sessionStorage.setItem("token", res.token);
-          window.sessionStorage.setItem("user", res.meta.role);
-          // 设置token有效期为1小时（3600000毫秒）
-          const timeout = 3600000; // 1小时
-          // 在设置token的同时，设置一个定时器，到时间后清除token
-          setTimeout(() => {
-            localStorage.removeItem("token");
-          }, timeout);
-          Cookies.set('isLoggedIn', 'true', { expires: 1, path: '/' }); // Cookie有效期1天
+      axios.post("http://localhost:8080/login", {
+        username: values.username,
+        password: values.password,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          console.log("登陆成功，返回的数据", response.data);
+          message.success("登录成功");
+          
+          // 存储token
+          sessionStorage.setItem("token", response.data.token);
+          // 存储用户信息
+          sessionStorage.setItem("user", values.username);
+          
+          // 导航到主页
           props.history.push("/home/content");
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          // 服务器返回了不在2xx范围内的错误码
+          message.error(error.response.data.message);
         } else {
-          message.info("登录失败");
+          message.error("登录失败，请稍后重试");
         }
       });
     } else {
@@ -47,14 +47,19 @@ function Login(props) {
         .then((response) => {
           console.log("注册的返回", response);
           if (response.data.success) {
-            message.success("注册成功，请登录");
+            message.success(response.data.message); // 使用后端返回的成功消息
             setIsLoginView(true); // 切换回登录视图
           } else {
-            message.error("注册失败");
+            message.error(response.data.message); // 使用后端返回的失败消息，如“用户已存在”
           }
         })
-        .catch(() => {
-          message.error("注册失败，请稍后重试");
+        .catch((error) => {
+          // 根据错误响应的状态码区分错误类型
+          if (error.response && error.response.status === 400) {
+            message.error(error.response.data.message); // 后端返回的具体错误消息
+          } else {
+            message.error("注册失败，请稍后重试"); // 网络或其他未知错误
+          }
         });
     }
   };

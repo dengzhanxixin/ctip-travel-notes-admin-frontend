@@ -44,6 +44,7 @@ function User() {
   const handleOk = () => {
     form.validateFields().then(async (values) => {
       try {
+        console.log('分配权限时的currentUserId和values.val',currentUserId,values)
         // 调用分配角色的服务函数，这里需要实现assignRoleToUser
         await assignRoleToUser(currentUserId, values.role);
         message.success("角色分配成功");
@@ -72,14 +73,14 @@ function User() {
     },
     {
       title: "ID",
-      dataIndex: "_id",
+      dataIndex: "id",
       key: "id",
     },
     {
       title: "操作",
       key: "action",
       render: (_, record) => (
-        <Button onClick={() => showRoleAssignModal(record._id)}>分配角色</Button>
+        <Button onClick={() => showRoleAssignModal(record.id)}>分配角色</Button>
       ),
     },
   ];
@@ -96,8 +97,8 @@ function User() {
         <Form form={form} layout="vertical">
           <Form.Item name="role" label="角色" rules={[{ required: true }]}>
             <Select>
-              <Option value="admin">Admini</Option>
-              <Option value="user">user</Option>
+              <Option value="super_admin">最高权限管理员</Option>
+              <Option value="root_admin">普通管理员</Option>
             </Select>
           </Form.Item>
         </Form>

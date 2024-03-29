@@ -75,7 +75,7 @@ function Home(props) {
       <Layout className="homeBodyBox">
         <Header className="homeHeader">
           <Image className="homeImage" src={require("../../assets/1.jpeg")} />
-          <span className="homeSpanTitle">携程前端训练营-任务管理系统</span>
+          <span className="homeSpanTitle">携程前端训练营-审核管理系统</span>
           <Button onClick={logOut} className="homeLogOut" type="primary">
             退出
           </Button>

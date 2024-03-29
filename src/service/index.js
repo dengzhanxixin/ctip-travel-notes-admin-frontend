@@ -19,14 +19,6 @@ export function getMenusdata() {
   });
 }
 
-// export function getUsers(params) {
-//   return request({
-//     url: "/people",
-//     method: "get",
-//     params
-//   });
-// }
-
 export function getAddUsers(data) {
   return request({
     url: "/people",

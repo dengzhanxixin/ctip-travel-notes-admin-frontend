@@ -72,12 +72,12 @@ function Task(props) {
     const [form] = Form.useForm();
 
     useEffect(() => {
-      const isLoggedIn = Cookies.get('isLoggedIn');
-      if (!isLoggedIn) {
-        console.log('cookies中的isloggedin为false', isLoggedIn)
-        // 如果未登录（没有token），重定向到登录页面
-        props.history.push("/login");
-      }
+      // const isLoggedIn = Cookies.get('isLoggedIn');
+      // if (!isLoggedIn) {
+      //   console.log('cookies中的isloggedin为false', isLoggedIn)
+      //   // 如果未登录（没有token），重定向到登录页面
+      //   props.history.push("/login");
+      // }
       // 当任务数据变化时重置表单的值
       form.resetFields();
     }, [task, form,]);
