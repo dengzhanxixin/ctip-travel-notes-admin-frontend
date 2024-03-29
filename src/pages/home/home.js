@@ -8,7 +8,7 @@ const { Header, Footer, Sider, Content } = Layout;
 function Home(props) {
   const [collapsed, setCollapsed] = useState(false);
   const [openKeys, setOpenKeys] = useState(["125"]);
-  const [rootSubmenuKeys, setRootSubmenuKeys] = useState([]);
+  const [setRootSubmenuKeys] = useState([]);
   const [statu, setStatu] = useState(false);
   const [item, setItem] = useState([]);
 
@@ -37,7 +37,7 @@ function Home(props) {
         }
       });
     }
-  }, [statu, item]);
+  }, [statu, item, setRootSubmenuKeys]);
 
   const logOut = () => {
     console.log(props.history);
@@ -49,13 +49,10 @@ function Home(props) {
   };
 
   const onOpenChange = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      setOpenKeys(keys);
-    } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    }
-  };
+    // 考虑所有情况，包括多个子菜单同时打开
+    setOpenKeys(keys);
+};
+
 
   const onClick = (item) => {
     console.log(item);
@@ -86,7 +83,7 @@ function Home(props) {
               theme="dark"
               mode="inline"
               items={item}
-              defaultOpenKeys={["125"]}
+              defaultOpenKeys={["11", "21", "31"]}
               openKeys={openKeys}
               onOpenChange={onOpenChange}
               onClick={onClick}
