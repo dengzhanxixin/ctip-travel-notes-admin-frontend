@@ -10,10 +10,10 @@ import {
   Switch,
 } from "antd";
 import { useEffect, useState } from "react";
-import { getTasks, addTask, deleteTask } from "../../service/index"; 
+import { getTasks, addTask, deleteTask } from "../../service/index";
 import "./task.css";
 import moment from "moment";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 function Task(props) {
   const [dataSource, setDataSource] = useState([]);
@@ -44,14 +44,21 @@ function Task(props) {
   // 更新任务信息
   const handleUpdateTask = async (values) => {
     try {
-      console.log("修改任务的时候发给后端的数据", editingTask.taskNumber, JSON.stringify(values))
-      const res = await fetch(`http://localhost:8080/tasks/${editingTask.taskNumber}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      console.log(
+        "修改任务的时候发给后端的数据",
+        editingTask.taskNumber,
+        JSON.stringify(values)
+      );
+      const res = await fetch(
+        `http://localhost:8080/tasks/${editingTask.taskNumber}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
       const data = await res.json();
       if (data.meta.status === 200) {
         message.success("任务更新成功");
@@ -80,7 +87,7 @@ function Task(props) {
       // }
       // 当任务数据变化时重置表单的值
       form.resetFields();
-    }, [task, form,]);
+    }, [task, form]);
 
     return (
       <Modal
@@ -199,7 +206,7 @@ function Task(props) {
       });
     }
     setBoolean(false);
-// eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boolean, pagenum, pagesize, total]);
 
   const showModal = () => {
