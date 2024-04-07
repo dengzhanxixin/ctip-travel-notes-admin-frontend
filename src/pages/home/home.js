@@ -7,8 +7,8 @@ import "./home.css";
 const { Header, Footer, Sider, Content } = Layout;
 function Home(props) {
   const [collapsed, setCollapsed] = useState(false);
-  const [openKeys, setOpenKeys] = useState(["125"]);
-  const [setRootSubmenuKeys] = useState([]);
+  const [openKeys, setOpenKeys] = useState(["1","2","3"]);
+  const [rootSubmenuKeys, setRootSubmenuKeys] = useState([]);
   const [statu, setStatu] = useState(false);
   const [item, setItem] = useState([]);
 
