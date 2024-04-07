@@ -22,7 +22,9 @@ function Login(props) {
           sessionStorage.setItem("token", response.data.token);
           // 存储用户信息
           sessionStorage.setItem("user", values.username);
-          
+          // 存储用户角色
+          sessionStorage.setItem("role", response.data.role);
+
           // 导航到主页
           props.history.push("/home/content");
         }

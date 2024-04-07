@@ -158,7 +158,8 @@ function Task(props) {
     };
 
     fetchTravelData();
-
+    // 获取用户角色
+    const userRole = sessionStorage.getItem("role");
     // 定义 columns
     setColumns([
       {
@@ -229,12 +230,14 @@ function Task(props) {
         render: (text, record) => (
           <span>
             <Button onClick={() => handleViewDetails(record)}>查看详情</Button>
-            <Button
-              onClick={() => handleDelete(record)}
-              style={{ marginLeft: 8 }}
-            >
-              删除
-            </Button>
+            {userRole === "root_admin" && (
+              <Button
+                onClick={() => handleDelete(record)}
+                style={{ marginLeft: 8 }}
+              >
+                删除
+              </Button>
+            )}
           </span>
         ),
       },
