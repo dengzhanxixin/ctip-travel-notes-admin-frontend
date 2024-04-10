@@ -1,20 +1,57 @@
-.userBody{
-  position: relative;
+/* user.css */
+.userBody {
+  margin: 20px;
 }
 
-.userBread{
-    position: absolute ;
-    left: 17px;
-    top: 5px;
+/* 表格和按钮样式 */
+.ant-table-wrapper {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.ant-breadcrumb-link{
-    color: black !important;
+.ant-btn {
+  border-radius: 4px;
 }
-.ant-breadcrumb-separator{
-    color: black !important;
+
+/* Modal 样式优化 */
+.ant-modal-body {
+  padding: 24px;
 }
-.userButton{
-    margin-left: 18px;
-    margin-top: 40px;
+
+.ant-form-item {
+  margin-bottom: 16px;
+}
+
+/* 表头的样式 */
+.custom-table .ant-table-thead > tr > th {
+    background-color: #303030; /* 深灰色背景 */
+    color: #000000; /* 文字颜色设置为黑色 */
+    font-weight: bold; /* 文字加粗 */
+    border-bottom: 2px solid #f0f0f0;
+    text-align: center; /* 将文字内容居中对齐 */
+  }
+  
+
+.custom-table .ant-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.custom-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.custom-table .ant-table-tbody > tr:nth-child(2n) > td {
+  background-color: #f0f0f0;
+}
+
+.custom-table .ant-table-tbody > tr:nth-child(2n + 1) > td {
+  background-color: #e6f7ff; /* 浅蓝色 */
+}
+
+.custom-table .ant-table-thead > tr > th {
+  background-color: #fafafa; /* 表头背景色 */
+  border-bottom: 2px solid #f0f0f0;
 }

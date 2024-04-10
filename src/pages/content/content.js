@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Button, Card, Carousel, Row, Col } from "antd";
-import { useEffect } from "react";
 import Cookies from 'js-cookie';
 
+/**
+ * Content组件显示首页内容，包括轮播图、任务管理系统介绍以及导航卡片。
+ * @param {Object} props - React组件属性，包括history对象。
+ * @returns {JSX.Element} Content组件的JSX元素。
+ */
 function Content(props) {
-
   const { history } = props;
 
+  /**
+   * navigateTo函数用于根据指定路径进行路由导航。
+   * @param {string} path - 路径字符串。
+   */
   const navigateTo = (path) => {
     history.push(`/home${path}`);
   };
 
+  // 轮播图图片数组
   const images = [
     require("../../assets/back1.jpg"),
     require("../../assets/back2.jpg"),
@@ -19,13 +27,9 @@ function Content(props) {
   ];
 
   useEffect(() => {
-    // const isLoggedIn = Cookies.get('isLoggedIn');
-    // if (!isLoggedIn) {
-    //   console.log('cookies中的isloggedin为false', isLoggedIn)
-    //   // 如果未登录（没有token），重定向到登录页面
-    //   props.history.push("/login");
-    // }
-  })
+    // 检查用户是否已登录，如果未登录则重定向到登录页面
+
+  }, []);
 
   return (
     <div style={{ margin: "20px" }}>
@@ -47,6 +51,7 @@ function Content(props) {
         ))}
       </Carousel>
 
+      {/* 任务管理系统介绍 */}
       <Row gutter={16} style={{ marginTop: "20px" }}>
         <Col span={24}>
           <Card title="任务管理系统">
@@ -62,17 +67,11 @@ function Content(props) {
         <Col span={12}>
           <Card title="人员管理" bordered={false}>
             <p>管理系统内的所有人员信息。</p>
-            <Button type="primary" onClick={() => navigateTo("/users")}>
-              进入人员管理
-            </Button>
           </Card>
         </Col>
         <Col span={12}>
-          <Card title="任务管理" bordered={false}>
-            <p>创建、修改和删除任务，确保项目按时完成。</p>
-            <Button type="primary" onClick={() => navigateTo("/tasks")}>
-              进入任务管理
-            </Button>
+          <Card title="游记管理" bordered={false}>
+            <p>创建、修改和删除游记。</p>
           </Card>
         </Col>
       </Row>

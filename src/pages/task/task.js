@@ -16,7 +16,7 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 import "./task.css";
-import axios from "axios";
+import { fetchTravelData, deleteTravel, auditTravel } from '../../service/index';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -105,18 +105,11 @@ function Task(props) {
           try {
             console.log("选中要删除的游记的id", record.id);
             // 发送删除请求到后端
-            const response = await fetch(
-              `http://localhost:8080/delete-travel/${record.id}`,
-              {
-                method: "DELETE",
-              }
-            );
-            const result = await response.json();
-
+            const result = await deleteTravel(record.id);
             if (result.success) {
               message.success(result.message);
               // 重新获取数据列表
-              fetchTravelData();
+              fetchTravelDataAsync();
             } else {
               message.error(result.message);
             }
@@ -127,13 +120,9 @@ function Task(props) {
         },
       });
     };
-    const fetchTravelData = async () => {
+    const fetchTravelDataAsync = async () => {
       try {
-        const response = await fetch("http://localhost:8080/all-travel-data");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
+        const result = await fetchTravelData();
         if (result.success) {
           console.log("后端返回的游记信息数据", result.data);
           const formattedData = result.data.map((item, index) => ({
@@ -157,7 +146,7 @@ function Task(props) {
       }
     };
 
-    fetchTravelData();
+    fetchTravelDataAsync();
     // 获取用户角色
     const userRole = sessionStorage.getItem("role");
     // 定义 columns
@@ -230,7 +219,7 @@ function Task(props) {
         render: (text, record) => (
           <span>
             <Button onClick={() => handleViewDetails(record)}>查看详情</Button>
-            {userRole === "root_admin" && (
+            {userRole === "super_admin" && (
               <Button
                 onClick={() => handleDelete(record)}
                 style={{ marginLeft: 8 }}
@@ -256,7 +245,31 @@ function Task(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecords, setSelectedRecords] = useState([]);
   const [form] = Form.useForm();
-
+  const fetchTravelDataAsync = async () => {
+    try {
+      const result = await fetchTravelData();
+      if (result.success) {
+        console.log("后端返回的游记信息数据", result.data);
+        const formattedData = result.data.map((item, index) => ({
+          key: index,
+          id: item.id,
+          title: item.title,
+          user: item.user.nickname, // 假设用户名称位于 user 对象的 name 字段
+          traffic: item.traffic,
+          img: item.img_Intrinsic,
+          imgs: item.imgs,
+          lastEditTime: item.summary.publishDisplayTime,
+          status: getStatusText(item.isChecked),
+          summary: item.summary,
+        }));
+        setDataSource(formattedData);
+        setFilteredData(formattedData);
+        setTotal(formattedData.length);
+      }
+    } catch (error) {
+      console.error("Failed to fetch data: ", error);
+    }
+  };
   // 处理行选择变化
   const rowSelection = {
     onChange: (selectedRowKeys) => {
@@ -322,13 +335,20 @@ function Task(props) {
         reason: status === "2" ? reason : undefined, // 如果是驳回，添加驳回理由
       };
 
-      // 发送请求到后端进行审核操作
-      await axios.post("http://localhost:8080/audit-travel", auditData);
+      // 使用封装的函数进行审核操作
+      const result = await auditTravel(auditData);
+      console.log("审核后返回的数据",result)
 
-      message.success("审核操作已提交");
+      if (result.success) {
+        message.success("审核操作已提交");
+        // 可能需要重新获取数据或执行其他UI更新操作
+      } else {
+        message.error("审核操作失败");
+      }
 
       // 关闭模态框并清除表单
       setIsModalVisible(false);
+      fetchTravelDataAsync();
       form.resetFields();
     } catch (errorInfo) {
       console.error("提交失败:", errorInfo);
