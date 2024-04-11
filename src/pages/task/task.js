@@ -29,7 +29,7 @@ function Task(props) {
   const [columns, setColumns] = useState([]);
   const [total, setTotal] = useState(0);
   const [pagenum, setPagenum] = useState(1);
-  const [pagesize] = useState(7);
+  const [pagesize] = useState(5);
   const [searchText, setSearchText] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [currentRecordIndex, setCurrentRecordIndex] = useState(0);
@@ -38,6 +38,15 @@ function Task(props) {
 
   // 新增查看详情状态
   const [detailVisible, setDetailVisible] = useState(false);
+
+  useEffect(() => {
+    // 检查用户是否已登录，如果未登录则重定向到登录页面
+    const userRole = sessionStorage.getItem("role");
+    if (!userRole) {
+      // 未登录，重定向到登录页面
+      props.history.push("/login");
+    }
+  }, []);
 
   // 将状态码转换为文本
   const getStatusText = (statusCode) => {
@@ -129,7 +138,7 @@ function Task(props) {
             key: index,
             id: item.id,
             title: item.title,
-            user: item.user.nickname, // 假设用户名称位于 user 对象的 name 字段
+            user: item.user.nickname, 
             traffic: item.traffic,
             img: item.img_Intrinsic,
             imgs: item.imgs,

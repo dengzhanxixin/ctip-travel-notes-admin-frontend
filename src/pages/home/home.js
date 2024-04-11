@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Layout, Menu, Button, Image } from "antd";
 import { getMenusdata } from "../../service/index";
 import { renderRoutes } from "react-router-config";
+import { UserOutlined, FileTextOutlined, ScheduleOutlined } from '@ant-design/icons';
 import "./home.css";
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -21,6 +22,7 @@ function Home(props) {
               label: item.authName,
               key: item.id,
               path: item.path,
+              icon: item.id === "11" ? <UserOutlined /> : item.id === "21" ? <FileTextOutlined /> : <ScheduleOutlined />,
               children: item.children.map((arr) => {
                 return { label: arr.authName, key: arr.id, path: arr.path };
               }),
@@ -52,7 +54,6 @@ function Home(props) {
     // 考虑所有情况，包括多个子菜单同时打开
     setOpenKeys(keys);
 };
-
 
   const onClick = (item) => {
     console.log(item);

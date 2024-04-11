@@ -1,37 +1,35 @@
-.userBody{
+.userBody {
   position: relative;
 }
 
-.userBread{
-    position: absolute ;
-    left: 17px;
-    top: 5px;
+.userBread {
+  position: absolute;
+  left: 17px;
+  top: 5px;
 }
 
-.ant-breadcrumb-link{
-    color: black !important;
-}
-.ant-breadcrumb-separator{
-    color: black !important;
-}
-.userButton{
-    margin-left: 18px;
-    margin-top: 40px;
+.userButton {
+  margin-left: 18px;
+  margin-top: 40px;
 }
 
 /* 表头样式 */
 .ant-table-thead > tr > th {
-    background-color: #303030; /* 深灰色背景 */
-    color: #000000; /* 文字颜色设置为黑色 */
-    font-weight: bold; /* 文字加粗 */
-  }
-  
-  /* 表格内容样式 */
-  .ant-table-tbody > tr:nth-child(even) {
-    background-color: #f0f0f0; /* 淡灰色背景 */
-  }
-  
-  .ant-table-tbody > tr:nth-child(odd) {
-    background-color: #e6f7ff; /* 蓝色背景 */
-  }
-  
+  background-color: #303030; /* 深灰色背景 */
+  color: #000000; /* 文字颜色设置为黑色 */
+  font-weight: bold; /* 文字加粗 */
+}
+
+/* 表格内容样式 */
+.ant-table-tbody > tr:nth-child(even) {
+  background-color: #f0f0f0; /* 淡灰色背景 */
+}
+
+.ant-table-tbody > tr:nth-child(odd) {
+  background-color: #e6f7ff; /* 蓝色背景 */
+}
+
+.userBread .ant-breadcrumb {
+  border: none; /* 移除边框 */
+  font-size: 18px; /* 增大字体大小 */
+}
