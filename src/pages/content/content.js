@@ -1,36 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Button, Card, Carousel, Row, Col } from "antd";
-import { useEffect } from "react";
-import Cookies from 'js-cookie';
 
 function Content(props) {
-
-  const { history } = props;
-
-  const navigateTo = (path) => {
-    history.push(`/home${path}`);
-  };
-
+  // 轮播图图片数组
   const images = [
-    require("../../assets/back1.jpg"),
-    require("../../assets/back2.jpg"),
-    require("../../assets/back3.jpeg"),
+    require("../../assets/back1.png"),
+    require("../../assets/back2.png"),
+    require("../../assets/back3.png"),
+    require("../../assets/back4.png"),
   ];
 
   useEffect(() => {
-    // const isLoggedIn = Cookies.get('isLoggedIn');
-    // if (!isLoggedIn) {
-    //   console.log('cookies中的isloggedin为false', isLoggedIn)
-    //   // 如果未登录（没有token），重定向到登录页面
-    //   props.history.push("/login");
-    // }
-  })
+    // 检查用户是否已登录，如果未登录则重定向到登录页面
+    const userRole = sessionStorage.getItem("role");
+    if (!userRole) {
+      // 未登录，重定向到登录页面
+      props.history.push("/login");
+    }
+  }, []);
+  
 
   return (
     <div style={{ margin: "20px" }}>
       {/* 轮播图 */}
-      <Carousel autoplay style={{ width: "100%" }}>
+      <Carousel autoplay style={{ width: "100%", marginBottom: "10px" }}>
         {images.map((image, index) => (
           <div key={index}>
             <img
@@ -38,8 +32,8 @@ function Content(props) {
               alt={`Slide ${index}`}
               style={{
                 width: "100%", 
-                height: "150px", 
-                objectFit: "contain", // 容纳图片以显示完整内容
+                height: "250px", 
+                objectFit: "cover", // 覆盖图片以填充整个容器
                 display: "block", 
               }}
             />
@@ -47,32 +41,27 @@ function Content(props) {
         ))}
       </Carousel>
 
-      <Row gutter={16} style={{ marginTop: "20px" }}>
+      {/* 权限管理系统介绍 */}
+      <Row gutter={16} style={{ marginBottom: "10px" }}>
         <Col span={24}>
-          <Card title="任务管理系统">
+          <Card title="权限管理系统">
             <p>
-              任务管理系统可以帮助企业或个人高效地管理任务和项目，包括任务分配、进度跟踪、团队协作等功能。
+              权限管理系统可以帮助高效地管理权限和维护系统，包括权限分配、进度跟踪、团队协作等功能。
             </p>
           </Card>
         </Col>
       </Row>
 
       {/* 导航卡片 */}
-      <Row gutter={16} style={{ marginTop: "20px" }}>
+      <Row gutter={16}>
         <Col span={12}>
           <Card title="人员管理" bordered={false}>
             <p>管理系统内的所有人员信息。</p>
-            <Button type="primary" onClick={() => navigateTo("/users")}>
-              进入人员管理
-            </Button>
           </Card>
         </Col>
         <Col span={12}>
-          <Card title="任务管理" bordered={false}>
-            <p>创建、修改和删除任务，确保项目按时完成。</p>
-            <Button type="primary" onClick={() => navigateTo("/tasks")}>
-              进入任务管理
-            </Button>
+          <Card title="游记管理" bordered={false}>
+            <p>创建、修改和删除游记。</p>
           </Card>
         </Col>
       </Row>

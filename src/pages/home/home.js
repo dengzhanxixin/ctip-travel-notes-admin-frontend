@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Layout, Menu, Button, Image } from "antd";
 import { getMenusdata } from "../../service/index";
 import { renderRoutes } from "react-router-config";
+import { UserOutlined, FileTextOutlined, ScheduleOutlined } from '@ant-design/icons';
 import "./home.css";
 
 const { Header, Footer, Sider, Content } = Layout;
 function Home(props) {
   const [collapsed, setCollapsed] = useState(false);
-  const [openKeys, setOpenKeys] = useState(["125"]);
+  const [openKeys, setOpenKeys] = useState(["1","2","3"]);
   const [rootSubmenuKeys, setRootSubmenuKeys] = useState([]);
   const [statu, setStatu] = useState(false);
   const [item, setItem] = useState([]);
@@ -21,6 +22,7 @@ function Home(props) {
               label: item.authName,
               key: item.id,
               path: item.path,
+              icon: item.id === "11" ? <UserOutlined /> : item.id === "21" ? <FileTextOutlined /> : <ScheduleOutlined />,
               children: item.children.map((arr) => {
                 return { label: arr.authName, key: arr.id, path: arr.path };
               }),
@@ -37,7 +39,7 @@ function Home(props) {
         }
       });
     }
-  }, [statu, item]);
+  }, [statu, item, setRootSubmenuKeys]);
 
   const logOut = () => {
     console.log(props.history);
@@ -49,13 +51,9 @@ function Home(props) {
   };
 
   const onOpenChange = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      setOpenKeys(keys);
-    } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    }
-  };
+    // 考虑所有情况，包括多个子菜单同时打开
+    setOpenKeys(keys);
+};
 
   const onClick = (item) => {
     console.log(item);
@@ -86,7 +84,7 @@ function Home(props) {
               theme="dark"
               mode="inline"
               items={item}
-              defaultOpenKeys={["125"]}
+              defaultOpenKeys={["11", "21", "31"]}
               openKeys={openKeys}
               onOpenChange={onOpenChange}
               onClick={onClick}
