@@ -5,8 +5,9 @@ FROM nginx:alpine
 RUN rm /etc/nginx/conf.d/default.conf
 RUN rm -rf /usr/share/nginx/html/*
 
-# 将打包好的React应用文件复制到nginx的工作目录
+# 将打包好的React应用文件和Nginx配置文件复制到相应目录
 COPY build/ /usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d/
 
 # 暴露80端口
 EXPOSE 80

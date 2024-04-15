@@ -29,7 +29,7 @@ function Task(props) {
   const [columns, setColumns] = useState([]);
   const [total, setTotal] = useState(0);
   const [pagenum, setPagenum] = useState(1);
-  const [pagesize] = useState(5);
+  const [pagesize] = useState(4);
   const [searchText, setSearchText] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [currentRecordIndex, setCurrentRecordIndex] = useState(0);
@@ -138,13 +138,13 @@ function Task(props) {
             key: index,
             id: item.id,
             title: item.title,
-            user: item.user.nickname, 
-            traffic: item.traffic,
-            img: item.img_Intrinsic,
+            user: item.user.nickName, 
+            city: item.city,
+            img: item.coverImg,
             imgs: item.imgs,
-            lastEditTime: item.summary.publishDisplayTime,
+            lastEditTime: item.publishDisplayTime,
             status: getStatusText(item.isChecked),
-            summary: item.summary,
+            content: item.content,
           }));
           setDataSource(formattedData);
           setFilteredData(formattedData);
@@ -263,13 +263,13 @@ function Task(props) {
           key: index,
           id: item.id,
           title: item.title,
-          user: item.user.nickname, // 假设用户名称位于 user 对象的 name 字段
-          traffic: item.traffic,
-          img: item.img_Intrinsic,
+          user: item.user.nickName, 
+          city: item.city,
+          img: item.coverImg,
           imgs: item.imgs,
-          lastEditTime: item.summary.publishDisplayTime,
+          lastEditTime: item.publishDisplayTime,
           status: getStatusText(item.isChecked),
-          summary: item.summary,
+          content: item.content,
         }));
         setDataSource(formattedData);
         setFilteredData(formattedData);
@@ -341,7 +341,7 @@ function Task(props) {
           ? viewDetailRecord.id
           : selectedRecords[currentRecordIndex].id,
         isChecked: status, // 1为通过，2为驳回
-        reason: status === "2" ? reason : undefined, // 如果是驳回，添加驳回理由
+        checkReason: status === "2" ? reason : undefined, // 如果是驳回，添加驳回理由
       };
 
       // 使用封装的函数进行审核操作
@@ -374,9 +374,9 @@ function Task(props) {
   const renderDetailModalContent = () => {
     if (!viewDetailRecord) return null;
 
-    const { title, imgs, user, id, lastEditTime, status, summary } =
+    const { title, imgs, user, id, lastEditTime, status, content } =
       viewDetailRecord;
-    const cleanContent = summary.content.replace(
+    const cleanContent = content.replace(
       /<ctag[^>]*>(.*?)<\/ctag>|<poi[^>]*>(.*?)<\/poi>/g,
       ""
     );
@@ -420,7 +420,7 @@ function Task(props) {
     }
 
     const record = selectedRecords[currentRecordIndex];
-    const cleanContent = record.summary.content.replace(
+    const cleanContent = record.content.replace(
       /<ctag[^>]*>(.*?)<\/ctag>|<poi[^>]*>(.*?)<\/poi>/g,
       ""
     );
