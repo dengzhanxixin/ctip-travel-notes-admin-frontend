@@ -41,12 +41,12 @@ function Content(props) {
         ))}
       </Carousel>
 
-      {/* 任务管理系统介绍 */}
+      {/* 权限管理系统介绍 */}
       <Row gutter={16} style={{ marginBottom: "10px" }}>
         <Col span={24}>
-          <Card title="任务管理系统">
+          <Card title="权限管理系统">
             <p>
-              任务管理系统可以帮助企业或个人高效地管理任务和项目，包括任务分配、进度跟踪、团队协作等功能。
+              权限管理系统可以帮助高效地管理权限和维护系统，包括权限分配、进度跟踪、团队协作等功能。
             </p>
           </Card>
         </Col>
