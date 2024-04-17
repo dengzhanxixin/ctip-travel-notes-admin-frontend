@@ -142,7 +142,7 @@ function Task(props) {
             city: item.city,
             img: item.coverImg,
             imgs: item.imgs,
-            lastEditTime: item.publishDisplayTime,
+            // lastEditTime: item.publishDisplayTime,
             status: getStatusText(item.isChecked),
             content: item.content,
           }));
@@ -267,7 +267,7 @@ function Task(props) {
           city: item.city,
           img: item.coverImg,
           imgs: item.imgs,
-          lastEditTime: item.publishDisplayTime,
+          // lastEditTime: item.publishDisplayTime,
           status: getStatusText(item.isChecked),
           content: item.content,
         }));
@@ -403,7 +403,7 @@ function Task(props) {
         <Descriptions bordered column={1}>
           <Descriptions.Item label="ID">{id}</Descriptions.Item>
           <Descriptions.Item label="用户">{user}</Descriptions.Item>
-          <Descriptions.Item label="编辑时间">{lastEditTime}</Descriptions.Item>
+          {/* <Descriptions.Item label="编辑时间">{lastEditTime}</Descriptions.Item> */}
           <Descriptions.Item label="状态">
             <Tag color={status === "审核通过" ? "green" : "volcano"}>
               {status}
@@ -450,9 +450,9 @@ function Task(props) {
         <Descriptions bordered column={1}>
           <Descriptions.Item label="ID">{record.id}</Descriptions.Item>
           <Descriptions.Item label="用户">{record.user}</Descriptions.Item>
-          <Descriptions.Item label="编辑时间">
+          {/* <Descriptions.Item label="编辑时间">
             {record.lastEditTime}
-          </Descriptions.Item>
+          </Descriptions.Item> */}
           <Descriptions.Item label="状态">
             <Tag color={record.status === "审核通过" ? "green" : "volcano"}>
               {record.status}
