@@ -214,13 +214,13 @@ function Task(props) {
           return <Tag color={color}>{text}</Tag>;
         },
       },
-      {
-        title: "最后修改时间",
-        dataIndex: "lastEditTime",
-        key: "lastEditTime",
-        align: "center",
-        // render: (text) => new Date(text).toLocaleString(),
-      },
+      // {
+      //   title: "最后修改时间",
+      //   dataIndex: "lastEditTime",
+      //   key: "lastEditTime",
+      //   align: "center",
+      //   // render: (text) => new Date(text).toLocaleString(),
+      // },
       {
         title: "操作",
         key: "action",
