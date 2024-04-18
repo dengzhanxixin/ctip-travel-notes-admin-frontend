@@ -20,7 +20,7 @@ const ROLES = {
   USER: "user",
 };
 
-const userRole = sessionStorage.getItem("role"); // 获取当前登录用户的角色
+// const userRole = sessionStorage.getItem("role"); // 获取当前登录用户的角色
 
 // 角色分配模态框组件
 function RoleAssignModal({ visible, onOk, onCancel }) {
@@ -55,14 +55,14 @@ function User(props) {
   const [isModalVisible, setIsModalVisible] = useState(false); // 控制角色分配模态框的可见性
   const [currentUserId, setCurrentUserId] = useState(null); // 当前操作的用户ID
 
-  useEffect(() => {
-    // 检查用户是否已登录，如果未登录则重定向到登录页面
-    const userRole = sessionStorage.getItem("role");
-    if (!userRole) {
-      // 未登录，重定向到登录页面
-      props.history.push("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   // 检查用户是否已登录，如果未登录则重定向到登录页面
+  //   const userRole = sessionStorage.getItem("role");
+  //   if (!userRole) {
+  //     // 未登录，重定向到登录页面
+  //     props.history.push("/login");
+  //   }
+  // }, []);
 
   // 组件挂载时获取用户列表
   useEffect(() => {
@@ -84,23 +84,23 @@ function User(props) {
 
   // 处理角色分配的函数
   const handleRoleAssign = async (form) => {
-    if (userRole !== "super_admin") {
-      // 如果当前用户不是 super_admin，显示权限不足的提示
-      notification.error({
-        message: "权限不足",
-        description: "只有超级管理员才能执行此操作",
-      });
-    } else {
-      try {
-        const values = await form.validateFields(); // 验证并获取表单值
-        await assignRoleToUser(currentUserId, values.role); // 调用角色分配API
-        notification.success({ message: "角色分配成功" }); // 分配成功的反馈
-        setIsModalVisible(false); // 关闭模态框
-        fetchUsers(); // 重新获取用户列表
-      } catch (error) {
-        notification.error({ message: "角色分配失败" }); // 分配失败的反馈
-      }
+    // if (userRole !== "super_admin") {
+    //   // 如果当前用户不是 super_admin，显示权限不足的提示
+    //   notification.error({
+    //     message: "权限不足",
+    //     description: "只有超级管理员才能执行此操作",
+    //   });
+    // } else {
+    try {
+      const values = await form.validateFields(); // 验证并获取表单值
+      await assignRoleToUser(currentUserId, values.role); // 调用角色分配API
+      notification.success({ message: "角色分配成功" }); // 分配成功的反馈
+      setIsModalVisible(false); // 关闭模态框
+      fetchUsers(); // 重新获取用户列表
+    } catch (error) {
+      notification.error({ message: "角色分配失败" }); // 分配失败的反馈
     }
+    // }
   };
 
   // 定义表格列的配置

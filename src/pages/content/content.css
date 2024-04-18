@@ -1,0 +1,69 @@
+.content-container {
+  margin: 5px 20px 2px 20px;
+}
+
+.carousel .image-slide img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease; /* 平滑的变换效果 */
+}
+
+.carousel:hover .image-slide img {
+  transform: scale(1.05); /* 鼠标悬停时放大图片 */
+}
+
+.card-row {
+  margin-top: 5px;
+}
+
+.card-row .custom-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card-row .custom-card.hoverable:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 鼠标悬停时增加阴影效果 */
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 20px; /* 调整标题字体大小 */
+}
+
+.card-content {
+  font-size: 18px; /* 调整内容字体大小 */
+  margin-top: 10px;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.fixed-img-size {
+  width: 50px;
+  height: 50px;
+}
+
+.title-with-background {
+  background-image: linear-gradient(
+    to right,
+    #4b6cb7,
+    #874da2
+  ); /* 使用渐变色作为标题背景 */
+  padding: 10px; /* 调整标题内边距 */
+  color: #fff; /* 设置标题文字颜色为白色 */
+  border-radius: 10px; /* 添加圆角 */
+  animation: gradientAnimation 5s infinite alternate; /* 添加渐变色动画 */
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

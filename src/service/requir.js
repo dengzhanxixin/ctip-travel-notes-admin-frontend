@@ -11,8 +11,8 @@ export function request(config) {
 
   // axios的拦截器
   instance.interceptors.request.use(config => {
-      // 请求头中使用Authorization字段获取token值
-      config.headers.Authorization=window.sessionStorage.getItem('token')
+    // 打印日志
+    console.log(`Sending a ${config.method} request to ${config.url} at ${new Date().toISOString()}`);
     return config
   }, err => {
     console.log(err);

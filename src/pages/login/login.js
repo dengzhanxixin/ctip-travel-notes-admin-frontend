@@ -19,12 +19,12 @@ function Login(props) {
             console.log("登录成功，返回的数据", response);
             message.success("登录成功");
 
-            // 存储token
-            sessionStorage.setItem("token", response.token);
-            // 存储用户信息
-            sessionStorage.setItem("user", userData.username);
-            // 存储用户角色
-            sessionStorage.setItem("role", response.role);
+            // // 存储token
+            // sessionStorage.setItem("token", response.token);
+            // // 存储用户信息
+            // sessionStorage.setItem("user", userData.username);
+            // // 存储用户角色
+            // sessionStorage.setItem("role", response.role);
 
             // 导航到主页
             props.history.push("/home/content");

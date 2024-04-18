@@ -16,7 +16,12 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 import "./task.css";
-import { fetchTravelData, deleteTravel, auditTravel } from '../../service/index';
+import {
+  fetchTravelData,
+  deleteTravel,
+  auditTravel,
+} from "../../service/index";
+import LazyLoad from "react-lazyload";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -39,14 +44,14 @@ function Task(props) {
   // 新增查看详情状态
   const [detailVisible, setDetailVisible] = useState(false);
 
-  useEffect(() => {
-    // 检查用户是否已登录，如果未登录则重定向到登录页面
-    const userRole = sessionStorage.getItem("role");
-    if (!userRole) {
-      // 未登录，重定向到登录页面
-      props.history.push("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   // 检查用户是否已登录，如果未登录则重定向到登录页面
+  //   const userRole = sessionStorage.getItem("role");
+  //   if (!userRole) {
+  //     // 未登录，重定向到登录页面
+  //     props.history.push("/login");
+  //   }
+  // }, []);
 
   // 将状态码转换为文本
   const getStatusText = (statusCode) => {
@@ -134,18 +139,20 @@ function Task(props) {
         const result = await fetchTravelData();
         if (result.success) {
           console.log("后端返回的游记信息数据", result.data);
-          const formattedData = result.data.map((item, index) => ({
-            key: index,
-            id: item.id,
-            title: item.title,
-            user: item.user.nickName, 
-            city: item.city,
-            img: item.coverImg,
-            imgs: item.imgs,
-            // lastEditTime: item.publishDisplayTime,
-            status: getStatusText(item.isChecked),
-            content: item.content,
-          }));
+          const formattedData = result.data
+            .map((item, index) => ({
+              key: index,
+              id: item.id,
+              title: item.title,
+              user: item.user.nickName,
+              city: item.city,
+              img: item.coverImg,
+              imgs: item.imgs,
+              // lastEditTime: item.publishDisplayTime,
+              status: getStatusText(item.isChecked),
+              content: item.content,
+            }))
+            .reverse(); // 这里添加.reverse()来倒序数据
           setDataSource(formattedData);
           setFilteredData(formattedData);
           setTotal(formattedData.length);
@@ -157,7 +164,7 @@ function Task(props) {
 
     fetchTravelDataAsync();
     // 获取用户角色
-    const userRole = sessionStorage.getItem("role");
+    // const userRole = sessionStorage.getItem("role");
     // 定义 columns
     setColumns([
       {
@@ -192,11 +199,13 @@ function Task(props) {
         key: "img",
         align: "center",
         render: (text) => (
-          <img
-            src={text}
-            alt="main"
-            style={{ width: "50px", height: "auto" }}
-          />
+          <LazyLoad height={50} once offset={100}>
+            <img
+              src={text}
+              alt="main"
+              style={{ width: "50px", height: "auto" }}
+            />
+          </LazyLoad>
         ),
       },
       {
@@ -228,14 +237,14 @@ function Task(props) {
         render: (text, record) => (
           <span>
             <Button onClick={() => handleViewDetails(record)}>查看详情</Button>
-            {userRole === "super_admin" && (
-              <Button
-                onClick={() => handleDelete(record)}
-                style={{ marginLeft: 8 }}
-              >
-                删除
-              </Button>
-            )}
+            {/* {userRole === "super_admin" && ( */}
+            <Button
+              onClick={() => handleDelete(record)}
+              style={{ marginLeft: 8 }}
+            >
+              删除
+            </Button>
+            {/* )} */}
           </span>
         ),
       },
@@ -259,18 +268,20 @@ function Task(props) {
       const result = await fetchTravelData();
       if (result.success) {
         console.log("后端返回的游记信息数据", result.data);
-        const formattedData = result.data.map((item, index) => ({
-          key: index,
-          id: item.id,
-          title: item.title,
-          user: item.user.nickName, 
-          city: item.city,
-          img: item.coverImg,
-          imgs: item.imgs,
-          // lastEditTime: item.publishDisplayTime,
-          status: getStatusText(item.isChecked),
-          content: item.content,
-        }));
+        const formattedData = result.data
+          .map((item, index) => ({
+            key: index,
+            id: item.id,
+            title: item.title,
+            user: item.user.nickName,
+            city: item.city,
+            img: item.coverImg,
+            imgs: item.imgs,
+            // lastEditTime: item.publishDisplayTime,
+            status: getStatusText(item.isChecked),
+            content: item.content,
+          }))
+          .reverse(); // 这里添加.reverse()来倒序数据
         setDataSource(formattedData);
         setFilteredData(formattedData);
         setTotal(formattedData.length);
@@ -346,7 +357,7 @@ function Task(props) {
 
       // 使用封装的函数进行审核操作
       const result = await auditTravel(auditData);
-      console.log("审核后返回的数据",result)
+      console.log("审核后返回的数据", result);
 
       if (result.success) {
         message.success("审核操作已提交");
