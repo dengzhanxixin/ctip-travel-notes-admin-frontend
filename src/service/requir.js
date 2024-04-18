@@ -5,7 +5,8 @@ export function request(config) {
   const instance = axios.create({
     // baseURL:  "http://localhost:8080",
     baseURL: process.env.REACT_APP_API_URL,
-    timeout: 10000
+    timeout: 10000,
+    withCredentials: true  // 确保跨域请求时发送Cookies
   })
 
   // axios的拦截器
