@@ -33,6 +33,7 @@
 }
 
 .homeContent {
+  /* min-height: 800px; */
   padding: 0px;
   background: #fff;
 }

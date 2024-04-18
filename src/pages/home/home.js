@@ -78,7 +78,7 @@ function Home(props) {
             退出
           </Button>
         </Header>
-        <Layout>
+        <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <Menu
               theme="dark"
