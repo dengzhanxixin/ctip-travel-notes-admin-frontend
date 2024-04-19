@@ -96,7 +96,10 @@ function Task(props) {
       // 如果未选择状态，或状态匹配，则返回true
       const statusMatch = !filterStatus || item.status === filterStatus;
 
-      return searchTextMatch && statusMatch;
+      // 添加检查是否已删除
+      const isNotDeleted = item.isChecked !== 3;
+
+      return searchTextMatch && statusMatch && isNotDeleted;
     });
 
     setFilteredData(filtered);
